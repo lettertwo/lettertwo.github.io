@@ -1,0 +1,6 @@
+# shared worktree-agnostic node_modules store
+enableGlobalVirtualStore: true
+storeDir: ../.pnpm
+
+# many integrations expect node executables in node_modules/.bin
+preferSymlinkedExecutables: true
