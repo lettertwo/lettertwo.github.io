@@ -4,3 +4,8 @@ storeDir: ../.pnpm
 
 # many integrations expect node executables in node_modules/.bin
 preferSymlinkedExecutables: true
+
+packageExtensions:
+  "eslint-config-next@*":
+    dependencies:
+      next: "*"
