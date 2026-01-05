@@ -5,9 +5,7 @@ import type { NextConfig } from "next";
 const withMDX = createMDX();
 
 const nextConfig: NextConfig = withMDX({
-  experimental: {
-    mdxRs: true,
-  },
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
 });
 
 if (process.env.NODE_ENV === "development") {
