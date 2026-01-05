@@ -1,0 +1,291 @@
+/* Grid */
+.resume-container {
+  padding: 4rem 2rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template:
+    "header"
+    "aside"
+    "summary"
+    "main";
+
+  > header {
+    grid-area: header;
+  }
+
+  > article {
+    grid-area: summary;
+  }
+
+  > main {
+    grid-area: main;
+  }
+
+  > aside {
+    grid-area: aside;
+  }
+}
+
+/* Typography */
+.resume-container {
+  line-height: 1.4;
+
+  h1 {
+    font-size: clamp(2rem, 8.333vw, 3.56rem);
+    font-weight: 100;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+
+    + p {
+      font-size: 1rem;
+      color: var(--subtle);
+    }
+  }
+
+  h2 {
+    font-size: 1.335rem;
+    font-weight: 700;
+    margin: 1.5rem 0 0.75rem 0;
+    padding-bottom: 0.25rem;
+    color: var(--emphasized);
+    border-bottom: 1px solid #aaa;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-top: 1.25rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--subtle);
+    margin-bottom: 0.75rem;
+
+    > strong {
+      font-weight: 600;
+      font-style: normal;
+    }
+  }
+
+  p {
+    margin-bottom: 0.75rem;
+  }
+
+  strong {
+    color: var(--emphasized);
+  }
+
+  /* Links */
+  a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  a:hover {
+    border-bottom-color: currentColor;
+  }
+
+  /* Lists */
+  ul {
+    margin: 0.5rem 0;
+    padding-left: 2rem;
+
+    &:nth-child(1 of #skills ~ ul) {
+      list-style: none;
+      padding: 0;
+    }
+
+    &:nth-child(1 of #about ~ ul) {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 0.25rem 0;
+    }
+  }
+}
+
+/* contact list in aside */
+ul.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-left: 0;
+  transform: translateY(0);
+  transition: transform 0.2s ease-in-out;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.25rem 0;
+  }
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: var(--subtle);
+    transition: fill 0.2s;
+
+    &:has(+ a:hover) {
+      fill: var(--link);
+    }
+  }
+}
+
+/* This sentinel is used to toggle the sticky header
+* in the aside. It is positioned above the sticky header
+* so that it triggers when the scroll position is approaching
+* the point where the aside will become stuck to the top of
+* the scrolling viewport down, or triggers after the aside
+* has become unstuck when scrolling back up.
+*
+* @see: StickyAsideObserver
+*/
+.sticky-aside-sentinel {
+  position: relative;
+  top: -3.5rem;
+}
+
+/* sticky header in aside */
+.sticky-aside {
+  position: absolute;
+  visibility: hidden;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.2s ease-in;
+
+  h1 {
+    font-size: 2rem;
+    margin-top: 2rem;
+  }
+
+  &.stuck {
+    visibility: visible;
+    transform: translateY(0);
+    opacity: 1;
+    transition:
+      transform 0.2s ease-out,
+      opacity 0.3s ease-out;
+  }
+}
+
+/* Offset the contact-list by the height of the sticky header:
+   2rem (margin-top) + 2rem (h1 font-size) * 1.2 (h1 line-height)
+   + 1rem (p font-size) * 1.4 (p line-height) + 0.75rem (bottom margin of p) */
+aside:has(> .sticky-aside.stuck) > ul.contact-list {
+  transform: translateY(calc(2rem + 2rem * 1.2 + 1rem * 1.4 + 0.75rem));
+  transition: transform 0.2s ease-out;
+}
+
+/* Tablet and up layout */
+@media screen and (min-width: 768px) {
+  .resume-container {
+    max-width: 1200px;
+    padding: 4rem;
+    gap: 0rem 2rem;
+    grid-template:
+      "header header"
+      "aside summary"
+      "aside main" / max-content 1fr;
+
+    > article,
+    > main {
+      max-width: 800px;
+    }
+
+    > aside {
+      position: sticky;
+      align-self: start;
+      top: 0;
+      margin-top: 1.5rem;
+    }
+  }
+}
+
+/* Print layout */
+@media print {
+  body,
+  html {
+    font-size: 11pt;
+  }
+
+  .resume-container {
+    margin: 0.25in;
+    padding: 0;
+    gap: 0rem 2rem;
+    grid-template:
+      "header aside"
+      "summary summary"
+      "main main";
+
+    > header {
+      align-self: center;
+    }
+
+    > article {
+      margin-top: -1.5rem;
+    }
+
+    > aside {
+      justify-self: end;
+      margin-right: 1rem;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      white-space: nowrap;
+    }
+
+    /* Show URLs after links */
+    a {
+      color: var(--emphasized);
+      text-decoration: none;
+      border: none;
+      font-size: 10pt;
+
+      &[href^="http"] {
+        visibility: hidden;
+        font-size: 0;
+        overflow: hidden;
+        letter-spacing: -1px;
+      }
+
+      &[href^="http"]:after {
+        content: attr(data-label, attr(href));
+        font-size: 10pt;
+        letter-spacing: normal;
+        visibility: visible;
+      }
+    }
+  }
+
+  ul.contact-list {
+    margin-left: -1.5rem;
+    font-size: 9pt;
+    color: var(--emphasized);
+
+    svg {
+      fill: var(--subtle);
+    }
+
+    li.download-link {
+      display: none;
+    }
+  }
+
+  #experience,
+  #about {
+    break-before: page;
+  }
+}
