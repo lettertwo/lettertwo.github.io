@@ -34,7 +34,7 @@
     font-size: clamp(2rem, 8.333vw, 3.56rem);
     font-weight: 100;
     line-height: 1.2;
-    letter-spacing: 0.06em;
+    margin-left: -0.1em;
 
     + p {
       font-size: 1rem;
@@ -45,7 +45,7 @@
   h2 {
     font-size: 1.335rem;
     font-weight: 700;
-    margin: 1.5rem 0 0.75rem 0;
+    margin: 1.5rem 0 0.75rem -0.1em;
     padding-bottom: 0.25rem;
     color: var(--emphasized);
     border-bottom: 1px solid #aaa;
