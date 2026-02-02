@@ -160,12 +160,8 @@ ul.contact-list {
   position: absolute;
   top: -2.5rem;
   height: 2.4rem;
-  border: 1px solid lime;
+  width: 1px;
   pointer-events: none;
-
-  &.intersecting {
-    border-color: red;
-  }
 }
 
 /* Don't display the sticky aside content at all by default. */
