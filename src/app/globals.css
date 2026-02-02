@@ -16,6 +16,24 @@
   }
 }
 
+/* Manual light theme override */
+html[data-theme="light"] {
+  --background: #ffffff;
+  --foreground: #19151e;
+  --emphasized: #4a484f;
+  --subtle: #7e7b7f;
+  --link: #1948df;
+}
+
+/* Manual dark theme override */
+html[data-theme="dark"] {
+  --background: #19151e;
+  --foreground: #ededed;
+  --emphasized: #ffffff;
+  --subtle: #7e7b7f;
+  --link: #4d9fff;
+}
+
 html,
 body {
   max-width: 100vw;
@@ -48,4 +66,62 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+#scrollup-bar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  transition: transform 0.3s ease-out;
+  pointer-events: none;
+  transform: translateY(0);
+
+  & > * {
+    pointer-events: auto;
+  }
+
+  &.hidden {
+    transform: translateY(-100%);
+  }
+}
+
+/* Theme toggle styles */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin: 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--subtle);
+  cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  > svg {
+    width: 66%;
+    height: 66%;
+  }
 }

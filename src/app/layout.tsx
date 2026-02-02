@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import ScrollupBar from "@/components/ScrollupBar";
+import ThemeToggle, { THEME_BOOTSTRAP_SCRIPT } from "@/components/ThemeToggle";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -12,8 +15,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html suppressHydrationWarning lang="en">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
+      </head>
+      <body>
+        <ScrollupBar>
+          <ThemeToggle />
+        </ScrollupBar>
+        {children}
+      </body>
     </html>
   );
 }
