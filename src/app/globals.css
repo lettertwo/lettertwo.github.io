@@ -55,6 +55,14 @@ body {
     max-height: none;
     overflow: hidden visible;
   }
+
+  #scrollup-bar {
+    display: none;
+
+    & > * {
+      display: none;
+    }
+  }
 }
 
 body {
