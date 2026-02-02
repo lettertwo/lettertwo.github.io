@@ -1,3 +1,10 @@
+/* prettier-ignore */
+:root{
+  --spring: linear(0, 0.1654, 0.4677, 0.7368, 0.9162, 1.0096, 1.043, 1.0437, 1.0315, 1.0177, 1.0074, 1.0012, 0.9985, 1, 0.9982, 0.9989, 0.9995, 1);
+  --quick-spring: linear(0, 0.2375, 0.5904, 0.8358, 0.9599, 1.0061, 1.0152, 1.0116, 1.0062, 1.0025, 1.0006, 0.9999, 1);
+}
+
+/* Light theme (default) */
 :root {
   --background: #ffffff;
   --foreground: #19151e;
@@ -6,6 +13,7 @@
   --link: #1948df;
 }
 
+/* Dark theme (system preference) */
 @media screen and (prefers-color-scheme: dark) {
   :root {
     --background: #19151e;
@@ -76,7 +84,7 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  transition: transform 0.3s ease-out;
+  transition: transform 550ms var(--spring);
   pointer-events: none;
   transform: translateY(0);
 
@@ -103,8 +111,8 @@ a {
   color: var(--subtle);
   cursor: pointer;
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
+    opacity 400ms var(--quick-spring),
+    transform 400ms var(--quick-spring);
 
   &:hover {
     opacity: 0.8;
@@ -118,6 +126,7 @@ a {
 
   &:active {
     transform: scale(0.95);
+    transition: none;
   }
 
   > svg {

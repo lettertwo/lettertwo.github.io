@@ -83,7 +83,7 @@
     color: var(--link);
     text-decoration: none;
     border-bottom: 1px solid transparent;
-    transition: border-color 0.2s;
+    transition: border-color 400ms var(--quick-spring);
   }
 
   a:hover {
@@ -118,7 +118,7 @@ ul.contact-list {
   margin: 0;
   padding-left: 0;
   transform: translateY(0);
-  transition: transform 0.2s ease-in-out;
+  transition: transform 550ms var(--spring);
 
   li {
     display: flex;
@@ -131,59 +131,46 @@ ul.contact-list {
     width: 1.25rem;
     height: 1.25rem;
     fill: var(--subtle);
-    transition: fill 0.2s;
+    transition:
+      fill 400ms var(--quick-spring),
+      transform 400ms var(--quick-spring);
 
     &:has(+ a:hover) {
+      transform: scale(1.05);
       fill: var(--link);
+    }
+
+    &:has(+ a:active) {
+      transform: scale(0.95);
+      transition: none;
     }
   }
 }
 
-/* This sentinel is used to toggle the sticky header
-* in the aside. It is positioned above the sticky header
-* so that it triggers when the scroll position is approaching
-* the point where the aside will become stuck to the top of
+/* This sentinel is used to toggle content in the sticky aside.
+* It is positioned above the aside so that it triggers
+* when the scroll position is approaching the point
+* where the aside will become stuck to the top of
 * the scrolling viewport down, or triggers after the aside
 * has become unstuck when scrolling back up.
 *
 * @see: StickyAsideObserver
 */
 .sticky-aside-sentinel {
-  position: relative;
-  top: -3.5rem;
-}
-
-/* sticky header in aside */
-.sticky-aside {
   position: absolute;
-  visibility: hidden;
-  transform: translateY(-50%);
-  opacity: 0;
-  transition:
-    transform 0.3s ease-in-out,
-    opacity 0.2s ease-in;
+  top: -2.5rem;
+  height: 2.4rem;
+  border: 1px solid lime;
+  pointer-events: none;
 
-  h1 {
-    font-size: 2rem;
-    margin-top: 2rem;
-  }
-
-  &.stuck {
-    visibility: visible;
-    transform: translateY(0);
-    opacity: 1;
-    transition:
-      transform 0.2s ease-out,
-      opacity 0.3s ease-out;
+  &.intersecting {
+    border-color: red;
   }
 }
 
-/* Offset the contact-list by the height of the sticky header:
-   2rem (margin-top) + 2rem (h1 font-size) * 1.2 (h1 line-height)
-   + 1rem (p font-size) * 1.4 (p line-height) + 0.75rem (bottom margin of p) */
-aside:has(> .sticky-aside.stuck) > ul.contact-list {
-  transform: translateY(calc(2rem + 2rem * 1.2 + 1rem * 1.4 + 0.75rem));
-  transition: transform 0.2s ease-out;
+/* Don't display the sticky aside content at all by default. */
+.sticky-aside-content {
+  display: none;
 }
 
 /* Tablet and up layout */
@@ -207,6 +194,59 @@ aside:has(> .sticky-aside.stuck) > ul.contact-list {
       align-self: start;
       top: 0;
       margin-top: 1.5rem;
+
+      .sticky-aside-content {
+        /* Display the sticky-aside-content, but initially hide it above the viewport */
+        display: block;
+        position: absolute;
+        visibility: hidden;
+        transform: translateY(-50%);
+        opacity: 0;
+        transition:
+          transform 550ms var(--spring),
+          opacity 400ms var(--quick-spring);
+
+        &.visible {
+          /* Move the sticky-aside-content into view */
+          visibility: visible;
+          transform: translateY(0);
+          opacity: 1;
+          transition:
+            transform 550ms var(--spring),
+            opacity 550ms var(--spring);
+        }
+
+        /* Move the sticky-aside-content further down */
+        /* (emulating a margin-top) when the aside is fully stuck */
+        .sticky-aside-sentinel:not(.intersecting) + &.visible {
+          transform: translateY(2rem);
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+      }
+
+      /* Move the contact-list down when the sticky-aside-content is visible */
+      &:has(> .sticky-aside-content.visible) > ul.contact-list {
+        /* height of .sticky-aside-content > h1: 2rem (font-size) * 1.2 (line-height) */
+        /* height of .sticky-aside-content > h1 + p: 1rem (font-size) * 1.4 (line-height) + 0.75rem (margin-bottom) */
+        transform: translateY(calc(2rem * 1.2 + 1rem * 1.4 + 0.75rem));
+        transition: transform 400ms var(--quick-spring);
+      }
+
+      /* Move the contact list further down when the sticky header is visible */
+      /* and the sentinel is out of view (meaning the aside is fully stuck) */
+      &:has(
+          > .sticky-aside-sentinel:not(.intersecting)
+            + .sticky-aside-content.visible
+        )
+        > ul.contact-list {
+        /* height of .sticky-aside-content > h1: 2rem (margin-top) + 2rem (font-size) * 1.2 (line-height) */
+        /* height of .sticky-aside-content > h1 + p: 1rem (font-size) * 1.4 (line-height) + 0.75rem (margin-bottom) */
+        transform: translateY(calc(2rem + 2rem * 1.2 + 1rem * 1.4 + 0.75rem));
+        transition: transform 750ms var(--spring);
+      }
     }
   }
 }

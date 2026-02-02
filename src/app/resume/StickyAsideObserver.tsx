@@ -9,7 +9,8 @@ interface StickyAsideObserverProps {
 export default function StickyAsideObserver({
   children,
 }: StickyAsideObserverProps) {
-  const [isAsideStuck, setIsAsideStuck] = useState(true);
+  const [isIntersecting, setIsIntersecting] = useState(true);
+  const [isAsideStuck, setIsAsideStuck] = useState(false);
 
   useEffect(() => {
     const sentinel = document.querySelector(".sticky-aside-sentinel");
@@ -18,9 +19,10 @@ export default function StickyAsideObserver({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsAsideStuck(entry.isIntersecting);
+        setIsIntersecting(entry.isIntersecting);
+        setIsAsideStuck(!entry.isIntersecting || entry.intersectionRatio < 1);
       },
-      { threshold: 1 },
+      { threshold: [0, 1] },
     );
 
     observer.observe(sentinel);
@@ -32,8 +34,10 @@ export default function StickyAsideObserver({
 
   return (
     <>
-      <div className="sticky-aside-sentinel"></div>
-      <div className={`sticky-aside ${!isAsideStuck ? "stuck" : ""}`}>
+      <div
+        className={`sticky-aside-sentinel ${isIntersecting ? "intersecting" : ""}`}
+      ></div>
+      <div className={`sticky-aside-content ${isAsideStuck ? "stuck" : ""}`}>
         {children}
       </div>
     </>
