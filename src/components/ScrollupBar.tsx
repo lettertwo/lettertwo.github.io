@@ -16,7 +16,13 @@ export default function ScrollupBar({
 
     function handleScroll() {
       const scrollTop = scrollContainer.scrollTop;
-      setScrollDirection(scrollTop > lastScrollTop.current ? "down" : "up");
+      setScrollDirection(
+        scrollTop > 0 &&
+          lastScrollTop.current >= 0 &&
+          scrollTop > lastScrollTop.current
+          ? "down"
+          : "up",
+      );
       setScrolledToContent(scrollTop > 100);
       lastScrollTop.current = scrollTop;
     }
