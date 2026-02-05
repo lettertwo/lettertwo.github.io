@@ -18,6 +18,13 @@ export const metadata: Metadata = {
   description: "the place where i put that thing that one time",
 };
 
+const PLAUSIBLE_BOOTSTRAP_SCRIPT = `
+window.plausible=window.plausible||function()
+{(plausible.q = plausible.q || []).push(arguments)}
+,plausible.init=plausible.init||function(i){(plausible.o = i || {})};
+plausible.init()
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,7 +33,14 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en" className={PlexSans.variable}>
       <head>
+        <script
+          async
+          src="https://plausible.io/js/pa-jmo6mrcZ5UDf62u3kGNHO.js"
+        ></script>
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
+        <script
+          dangerouslySetInnerHTML={{ __html: PLAUSIBLE_BOOTSTRAP_SCRIPT }}
+        />
       </head>
       <body>
         <ScrollupBar>
