@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import ScrollupBar from "@/components/ScrollupBar";
 import ThemeToggle, { THEME_BOOTSTRAP_SCRIPT } from "@/components/ThemeToggle";
 import localFont from "next/font/local";
@@ -12,11 +11,7 @@ const PlexSans = localFont({
 });
 
 import "./globals.css";
-
-export const metadata: Metadata = {
-  title: "lettertwo dot dev",
-  description: "the place where i put that thing that one time",
-};
+import "./layout.css";
 
 const PLAUSIBLE_BOOTSTRAP_SCRIPT = `
 window.plausible=window.plausible||function()
@@ -26,9 +21,11 @@ plausible.init()
 `;
 
 export default function RootLayout({
-  children,
+  main,
+  aside,
 }: Readonly<{
-  children: React.ReactNode;
+  main: React.ReactNode;
+  aside: React.ReactNode;
 }>) {
   return (
     <html suppressHydrationWarning lang="en" className={PlexSans.variable}>
@@ -46,7 +43,10 @@ export default function RootLayout({
         <ScrollupBar>
           <ThemeToggle />
         </ScrollupBar>
-        {children}
+        <div className="page-container">
+          {main}
+          {aside}
+        </div>
       </body>
     </html>
   );

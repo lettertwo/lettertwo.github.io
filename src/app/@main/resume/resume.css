@@ -1,0 +1,78 @@
+/* Print layout */
+@media print {
+  body,
+  html {
+    font-size: 11pt;
+  }
+
+  .page-container {
+    margin: 0.25in;
+    padding: 0;
+    gap: 0rem 2rem;
+    grid-template:
+      "header aside"
+      "summary summary"
+      "main main";
+
+    > header {
+      align-self: center;
+    }
+
+    > article {
+      margin-top: -1.5rem;
+    }
+
+    > aside {
+      justify-self: end;
+      margin-right: 1rem;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      white-space: nowrap;
+    }
+
+    /* Show URLs after links */
+    a {
+      color: var(--emphasized);
+      text-decoration: none;
+      border: none;
+      font-size: 10pt;
+
+      &[href^="http"] {
+        visibility: hidden;
+        font-size: 0;
+        overflow: hidden;
+        letter-spacing: -1px;
+      }
+
+      &[href^="http"]:after {
+        content: attr(data-label, attr(href));
+        font-size: 10pt;
+        letter-spacing: normal;
+        visibility: visible;
+      }
+    }
+  }
+
+  ul.contact-list {
+    margin-left: -1.5rem;
+    font-size: 9pt;
+    color: var(--emphasized);
+
+    svg {
+      fill: var(--subtle);
+    }
+
+    li.download-link {
+      display: none;
+    }
+  }
+
+  #experience,
+  #about {
+    break-before: page;
+  }
+}
