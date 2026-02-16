@@ -90,6 +90,14 @@
     border-bottom-color: currentColor;
   }
 
+  blockquote {
+    border-left: 4px solid var(--subtle);
+    padding-left: 1rem;
+    margin-left: 0;
+    color: var(--subtle);
+    font-style: italic;
+  }
+
   /* Lists */
   ul {
     margin: 0.5rem 0;
