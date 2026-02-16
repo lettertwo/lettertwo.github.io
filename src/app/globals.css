@@ -24,22 +24,24 @@
   }
 }
 
-/* Manual light theme override */
-html[data-theme="light"] {
-  --background: #ffffff;
-  --foreground: #19151e;
-  --emphasized: #4a484f;
-  --subtle: #7e7b7f;
-  --link: #1948df;
-}
+@media screen {
+  /* Manual light theme override */
+  html[data-theme="light"] {
+    --background: #ffffff;
+    --foreground: #19151e;
+    --emphasized: #4a484f;
+    --subtle: #7e7b7f;
+    --link: #1948df;
+  }
 
-/* Manual dark theme override */
-html[data-theme="dark"] {
-  --background: #19151e;
-  --foreground: #ededed;
-  --emphasized: #ffffff;
-  --subtle: #7e7b7f;
-  --link: #4d9fff;
+  /* Manual dark theme override */
+  html[data-theme="dark"] {
+    --background: #19151e;
+    --foreground: #ededed;
+    --emphasized: #ffffff;
+    --subtle: #7e7b7f;
+    --link: #4d9fff;
+  }
 }
 
 html,
